@@ -8,4 +8,6 @@ import com.example.login.demo.entities.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
+	public UserEntity findOneByUserName(String username);
+
 }

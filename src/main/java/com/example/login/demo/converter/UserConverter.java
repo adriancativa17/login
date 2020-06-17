@@ -12,4 +12,12 @@ public class UserConverter {
 		entity.setStatus(dto.status);
 		return entity;
 	}
+	
+	public UserDTO entityToDTO(UserEntity entity) {
+		UserDTO dto = new UserDTO();
+		dto.username = entity.getUserName();
+		dto.password = entity.getPassword();
+		dto.status = entity.getStatus();
+		return dto;
+	}
 }

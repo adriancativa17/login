@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.login.demo.converter.UserConverter;
+import com.example.login.demo.dto.ErrorDTO;
 import com.example.login.demo.dto.UserDTO;
 import com.example.login.demo.entities.UserEntity;
 import com.example.login.demo.repositories.UserRepository;
@@ -22,5 +23,26 @@ public class UserService {
 		UserEntity entity = userConverter.dtoToEntity(dto);
 		userRepository.saveAndFlush(entity);
 		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
+	
+	public ResponseEntity<Object> getUser(String username, String password){
+		try {
+			UserEntity entity = userRepository.findOneByUserName(username);
+			if(entity != null) {
+				if(entity.getPassword().equals(password)) {
+					UserDTO dto = userConverter.entityToDTO(entity);
+					return new ResponseEntity<Object>(dto, HttpStatus.OK); 
+				}
+				else {
+					return new ResponseEntity<Object>(new ErrorDTO("Contraseña incorrecta"), HttpStatus.BAD_REQUEST);
+				}
+			}
+			else {
+				return new ResponseEntity<Object>(new ErrorDTO("Usuario incorrecto"), HttpStatus.BAD_REQUEST);
+			}
+		}
+		catch (Exception e) {
+			return new ResponseEntity<Object>(new ErrorDTO("Ocurrio un error: "+e.getMessage()), HttpStatus.BAD_REQUEST);
+		}
 	}
 }
