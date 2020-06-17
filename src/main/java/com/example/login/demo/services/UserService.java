@@ -34,15 +34,15 @@ public class UserService {
 					return new ResponseEntity<Object>(dto, HttpStatus.OK); 
 				}
 				else {
-					return new ResponseEntity<Object>(new ErrorDTO("Contraseña incorrecta"), HttpStatus.BAD_REQUEST);
+					return new ResponseEntity<Object>(new ErrorDTO("Contraseña incorrecta", 13), HttpStatus.BAD_REQUEST);
 				}
 			}
 			else {
-				return new ResponseEntity<Object>(new ErrorDTO("Usuario incorrecto"), HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Object>(new ErrorDTO("Usuario incorrecto", 12), HttpStatus.BAD_REQUEST);
 			}
 		}
 		catch (Exception e) {
-			return new ResponseEntity<Object>(new ErrorDTO("Ocurrio un error: "+e.getMessage()), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(new ErrorDTO("Ocurrio un error: "+e.getMessage(), 14), HttpStatus.BAD_REQUEST);
 		}
 	}
 }
